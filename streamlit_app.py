@@ -40,3 +40,10 @@ my_cur.execute("SELECT * from fruit_load_list")
 my_data_rows = my_cur.fetchall()
 streamlit.header("The Fruit Load list contains:")
 streamlit.dataframe(my_data_rows)
+
+add_my_fruit = streamlit.text_input('What fruit would you like to add?')
+my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+my_cur = my_cnx.cursor()
+my_cur.execute(f'append {add_my_fruit} to fruit_load_list')
+streamlit.write(f'Thanks for adding {add_my_fruit})
+
